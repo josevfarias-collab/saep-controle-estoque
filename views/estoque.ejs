@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Movimentação de Estoque</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 30px; background-color: #f4f6f9;">
+    <a href="/" style="text-decoration: none; color: #007bff; font-weight: bold;">⬅ Voltar ao Painel</a>
+    <h2>🔄 Movimentação de Estoque</h2>
+
+    <% if (alerta) { %>
+        <div style="background: #fff3cd; border-left: 5px solid #ffc107; color: #856404; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-weight: bold;">⚠️ <%= alerta %></div>
+    <% } %>
+
+    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 400px;">
+            <h3>Saldos Atuais (Ordem Alfabética A-Z)</h3>
+            <table border="0" style="width: 100%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <thead style="background: #007bff; color: white;">
+                    <tr>
+                        <th style="padding: 12px; text-align: left;">Insumo</th>
+                        <th style="padding: 12px; text-align: center;">Qtd Atual</th>
+                        <th style="padding: 12px; text-align: center;">Mínimo Seguro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% produtos.forEach(p => { %>
+                        <tr style="border-bottom: 1px solid #eee; <%= p.quantidade < p.estoque_minimo ? 'background-color: #f8d7da;' : '' %>">
+                            <td style="padding: 12px;"><strong><%= p.nome %></strong></td>
+                            <td style="padding: 12px; text-align: center;"><%= p.quantidade %></td>
+                            <td style="padding: 12px; text-align: center; color: #666;"><%= p.estoque_minimo %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width: 400px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: fit-content;">
+            <h3>Lançar Movimentação</h3>
+            <form action="/estoque/movimentar" method="POST">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Selecione o Produto</label>
+                    <select name="produto_id" style="width: 100%; padding: 8px;" required>
+                        <% produtos.forEach(p => { %>
+                            <option value="<%= p.id %>"><%= p.nome %> (Atual: <%= p.quantidade %>)</option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tipo de Movimentação</label>
+                    <div style="display: flex; gap: 20px;">
+                        <label><input type="radio" name="operacao" value="ENTRADA" checked> 🟢 Entrada</label>
+                        <label><input type="radio" name="operacao" value="SAIDA"> 🔴 Saída</label>
+                    </div>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Quantidade</label>
+                    <input type="number" name="quantidade" min="1" required style="width: 90%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Confirmar Registro</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

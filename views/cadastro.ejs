@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produtos</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 30px; background-color: #f4f6f9;">
+    <a href="/" style="text-decoration: none; color: #007bff; font-weight: bold;">⬅ Voltar ao Painel</a>
+    <h2>📦 Gerenciamento de Produtos</h2>
+
+    <% if (erro) { %>
+        <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-weight: bold;">⚠️ <%= erro %></div>
+    <% } %>
+
+    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <form action="/produtos" method="GET" style="display: flex; gap: 10px;">
+            <input type="text" name="busca" value="<%= busca %>" placeholder="Buscar por nome ou código..." style="padding: 8px; width: 300px; border: 1px solid #ccc; border-radius: 4px;">
+            <button type="submit" style="padding: 8px 15px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">Buscar</button>
+            <a href="/produtos" style="padding: 8px 15px; background: #e2e3e5; color: #383d41; text-decoration: none; border-radius: 4px; font-size: 14px; text-align: center;">Limpar Filtro</a>
+        </form>
+    </div>
+
+    <table border="0" style="width: 100%; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px;">
+        <thead style="background: #343a40; color: white;">
+            <tr>
+                <th style="padding: 12px; text-align: left;">Código</th>
+                <th style="padding: 12px; text-align: left;">Nome do Insumo</th>
+                <th style="padding: 12px; text-align: left;">Qtd Atual</th>
+                <th style="padding: 12px; text-align: left;">Estoque Mínimo</th>
+                <th style="padding: 12px; text-align: center;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% produtos.forEach(p => { %>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px;"><%= p.codigo_barras || 'N/A' %></td>
+                    <td style="padding: 12px;"><strong><%= p.nome %></strong></td>
+                    <td style="padding: 12px;"><%= p.quantidade %></td>
+                    <td style="padding: 12px;"><%= p.estoque_minimo %></td>
+                    <td style="padding: 12px; text-align: center;">
+                        <form action="/produtos/deletar/<%= p.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Deseja realmente remover?')">
+                            <button type="submit" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <div style="background: white; padding: 20px; border-radius: 8px; max-width: 450px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3>➕ Cadastrar Novo Produto</h3>
+        <form action="/produtos/criar" method="POST">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nome do Produto *</label>
+                <input type="text" name="nome" required style="width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Código de Barras</label>
+                <input type="text" name="codigo_barras" style="width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Quantidade Inicial</label>
+                <input type="number" name="quantidade" value="0" min="0" required style="width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Estoque Mínimo</label>
+                <input type="number" name="estoque_minimo" value="0" min="0" required style="width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <button type="submit" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Salvar Produto</button>
+        </form>
+    </div>
+</body>
+</html>

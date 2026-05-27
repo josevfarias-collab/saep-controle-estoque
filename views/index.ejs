@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Almoxarifado - Início</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 40px; background-color: #f4f6f9;">
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2>Sistema de Almoxarifado - SENAI</h2>
+        <p>Olá, <strong style="color: #0056b3;"><%= usuario.nome %></strong>! Bem-vindo ao sistema.</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <h3>Menu de Operações</h3>
+        <div style="display: flex; gap: 15px;">
+            <a href="/produtos"><button style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">📦 Cadastro de Produtos</button></a>
+            <a href="/estoque"><button style="padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">🔄 Gestão de Estoque</button></a>
+            <a href="/logout"><button style="padding: 12px 20px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">🚪 Sair</button></a>
+        </div>
+    </div>
+</body>
+</html>
