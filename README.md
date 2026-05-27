@@ -4,7 +4,7 @@ Este repositório contém a entrega oficial da solução prática desenvolvida p
 
 ## 👤 Desenvolvedor
 * **Analista:** José Victor Feitoza Farias
-* **Usuário GitHub:** `josevfarias-collab`
+
 
 ---
 
